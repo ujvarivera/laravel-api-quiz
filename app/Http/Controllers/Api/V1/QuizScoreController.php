@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\QuizScore;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class QuizScoreController extends Controller
 {
@@ -21,18 +22,26 @@ class QuizScoreController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-            'score' => 'required',
-        ]);
-
-        QuizScore::create([
-            'user_id' => $request->get('user_id'),
-            'score' => $request->get('score'),
-            'created_at' => now()->timestamp,
-        ]);
-
-        return response('New score is saved.');
+        try {    
+            $validatedScore = Validator::make($request->all(), [
+                'user_id' => 'required',
+                'score' => 'required',
+            ]);
+    
+            if ($validatedScore->fails()) {
+                return response()->json(['message' => 'Score saving failed', 'error' => $validatedScore->errors()], 500);
+            }
+    
+            QuizScore::create([
+                'user_id' => $request->get('user_id'),
+                'score' => $request->get('score'),
+                'created_at' => now()->timestamp,
+            ]);
+    
+            return response()->json(['message' => 'Score saved'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Score saving failed', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
