@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->integer('score');
+            $table->integer('questions');
+            $table->string('category', 40);
+            $table->string('difficulty', 10);
             $table->timestamps();
         });
     }

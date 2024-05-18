@@ -18,6 +18,9 @@ class QuizScore extends Model
     protected $fillable = [
         'user_id',
         'score',
+        'questions',
+        'category',
+        'difficulty'
     ];
 
     public function user()

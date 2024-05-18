@@ -26,6 +26,9 @@ class QuizScoreController extends Controller
             $validatedScore = Validator::make($request->all(), [
                 'user_id' => 'required',
                 'score' => 'required',
+                'questions' => 'required',
+                'category' => 'required',
+                'difficulty' => 'required',
             ]);
     
             if ($validatedScore->fails()) {
@@ -35,6 +38,9 @@ class QuizScoreController extends Controller
             QuizScore::create([
                 'user_id' => $request->get('user_id'),
                 'score' => $request->get('score'),
+                'questions' => $request->get('questions'),
+                'category' => $request->get('category'),
+                'difficulty' => $request->get('difficulty'),
                 'created_at' => now()->timestamp,
             ]);
     
