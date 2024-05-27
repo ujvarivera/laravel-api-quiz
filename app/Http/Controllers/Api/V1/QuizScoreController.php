@@ -14,7 +14,10 @@ class QuizScoreController extends Controller
      */
     public function index()
     {
-        return QuizScore::all();
+        return QuizScore::with('user')
+        ->orderBy('result', 'desc')
+        ->limit(5)
+        ->get();
     }
 
     /**
@@ -41,6 +44,7 @@ class QuizScoreController extends Controller
                 'questions' => $request->get('questions'),
                 'category' => $request->get('category'),
                 'difficulty' => $request->get('difficulty'),
+                'result' => ($request->get('score') / $request->get('questions')) * 100, // percent
                 'created_at' => now()->timestamp,
             ]);
     

@@ -20,7 +20,8 @@ class QuizScore extends Model
         'score',
         'questions',
         'category',
-        'difficulty'
+        'difficulty',
+        'result'
     ];
 
     public function user()

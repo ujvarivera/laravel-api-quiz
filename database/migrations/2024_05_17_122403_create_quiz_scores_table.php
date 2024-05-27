@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('questions');
             $table->string('category', 40);
             $table->string('difficulty', 10);
+            $table->decimal('result', total: 8, places: 2);
             $table->timestamps();
         });
     }
